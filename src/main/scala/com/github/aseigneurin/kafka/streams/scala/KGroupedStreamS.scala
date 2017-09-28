@@ -10,35 +10,47 @@ class KGroupedStreamS[K, V](inner: KGroupedStream[K, V]) {
 
   def count(storeName: String): KTableS[K, Long] = {
     inner.count(storeName)
-      .mapValues[Long](javaLong => Long.box(javaLong))
+      .mapValues[Long](new ValueMapper[java.lang.Long, scala.Long] {
+      override def apply(value: java.lang.Long): scala.Long = Long.box(value)
+    })
   }
 
   def count(storeSupplier: StateStoreSupplier[KeyValueStore[_, _]]): KTableS[K, Long] = {
     inner.count(storeSupplier)
-      .mapValues[Long](javaLong => Long.box(javaLong))
+      .mapValues[Long](new ValueMapper[java.lang.Long, scala.Long] {
+      override def apply(value: java.lang.Long): scala.Long = Long.box(value)
+    })
   }
 
   def count[W <: Window](windows: Windows[W],
                          storeName: String): KTableS[Windowed[K], Long] = {
     inner.count[W](windows, storeName)
-      .mapValues[Long](javaLong => Long.box(javaLong))
+      .mapValues[Long](new ValueMapper[java.lang.Long, scala.Long] {
+      override def apply(value: java.lang.Long): scala.Long = Long.box(value)
+    })
   }
 
   def count[W <: Window](windows: Windows[W],
                          storeSupplier: StateStoreSupplier[WindowStore[_, _]]): KTableS[Windowed[K], Long] = {
     inner.count[W](windows, storeSupplier)
-      .mapValues[Long](javaLong => Long.box(javaLong))
+      .mapValues[Long](new ValueMapper[java.lang.Long, scala.Long] {
+      override def apply(value: java.lang.Long): scala.Long = Long.box(value)
+    })
   }
 
   def count(sessionWindows: SessionWindows, storeName: String): KTableS[Windowed[K], Long] = {
     inner.count(sessionWindows, storeName)
-      .mapValues[Long](javaLong => Long.box(javaLong))
+      .mapValues[Long](new ValueMapper[java.lang.Long, scala.Long] {
+      override def apply(value: java.lang.Long): scala.Long = Long.box(value)
+    })
   }
 
   def count(sessionWindows: SessionWindows,
             storeSupplier: StateStoreSupplier[SessionStore[_, _]]): KTableS[Windowed[K], Long] = {
     inner.count(sessionWindows, storeSupplier)
-      .mapValues[Long](javaLong => Long.box(javaLong))
+      .mapValues[Long](new ValueMapper[java.lang.Long, scala.Long] {
+      override def apply(value: java.lang.Long): scala.Long = Long.box(value)
+    })
   }
 
   def reduce(reducer: (V, V) => V,

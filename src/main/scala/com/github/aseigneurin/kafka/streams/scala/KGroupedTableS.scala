@@ -10,12 +10,16 @@ class KGroupedTableS[K, V](inner: KGroupedTable[K, V]) {
 
   def count(storeName: String): KTableS[K, Long] = {
     inner.count(storeName)
-      .mapValues[Long](javaLong => Long.box(javaLong))
+      .mapValues[Long](new ValueMapper[java.lang.Long, scala.Long] {
+      override def apply(value: java.lang.Long): scala.Long = Long.box(value)
+    })
   }
 
   def count(storeSupplier: StateStoreSupplier[KeyValueStore[_, _]]): KTableS[K, Long] = {
     inner.count(storeSupplier)
-      .mapValues[Long](javaLong => Long.box(javaLong))
+      .mapValues[Long](new ValueMapper[java.lang.Long, scala.Long] {
+      override def apply(value: java.lang.Long): scala.Long = Long.box(value)
+    })
   }
 
   def reduce(adder: (V, V) => V,
