@@ -2,9 +2,7 @@ name := "kafka-streams-scala"
 
 organization := "com.github.aseigneurin"
 
-version := "0.0.1-SNAPSHOT"
-
-scalaVersion in ThisBuild := "2.11.11"
+crossScalaVersions in ThisBuild := Seq("2.11.11", "2.12.3")
 
 scalacOptions := Seq("-Xexperimental", "-unchecked", "-deprecation")
 
